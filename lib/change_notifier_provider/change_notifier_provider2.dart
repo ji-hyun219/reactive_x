@@ -8,7 +8,11 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // ChangeNotifierProvider 위젯으로 감싸준다.
+    // ChangeNotifierProvider를 기존 MyHomePage 감싸주는 것을 더 상위 객체인 MaterialApp으로 옮겼다.
+    // 이렇게하지 않으면 당연히 에러가 날 것이다.
+    // 왜냐면 MyHomePage클래스와 Page2클래스는 위젯트리에서 동등한 레벨에 존재하기 때문이다.
+    // 그리하여 MyHomePage에서 Provider를 감싸주면 Page2에서는 참조할 수 없다.
+    // 그 이상의 존재를 Provider로 감싸주어야 두 클래스 모두 참조할 수 있는 객체가된다.
     return ChangeNotifierProvider<Counter>(
       create: (context) => Counter(0),
       child: MaterialApp(
